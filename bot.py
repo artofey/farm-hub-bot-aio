@@ -9,7 +9,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 logging.basicConfig(level=logging.DEBUG)
 
 loop = asyncio.get_event_loop()
-bot = Bot(token=TOKEN, loop=loop, parse_mode=types.ParseMode.HTML, proxy=PROXY)
+bot = Bot(token=TOKEN, loop=loop, parse_mode=types.ParseMode.HTML)
 dp = Dispatcher(bot)
 
 def_list = []
