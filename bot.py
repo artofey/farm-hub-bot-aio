@@ -4,6 +4,17 @@ from aiogram import Bot, Dispatcher, executor, types
 import asyncio
 import logging
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from aiogram.utils.executor import start_webhook
+
+# webhook settings
+WEBHOOK_HOST = 'https://artik3386.pythonanywhere.com'
+WEBHOOK_PATH = f'/{TOKEN}/'
+WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
+
+# webserver settings
+WEBAPP_HOST = 'localhost'  # or ip
+WEBAPP_PORT = 3001
+
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -112,5 +123,23 @@ for h, m in time_do_it:
 scheduler.start()
 
 
+# включение работы через вебхук
+async def on_startup(dp):
+    await bot.set_webhook(WEBHOOK_URL)
+    # insert code here to run it after start
+
+
+async def on_shutdown(dp):
+    # insert code here to run it before shutdown
+    await bot.delete_webhook()
+
+
 if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True, timeout=60)
+    start_webhook(dispatcher=dp, webhook_path=WEBHOOK_PATH, on_startup=on_startup, on_shutdown=on_shutdown,
+                  skip_updates=True, host=WEBAPP_HOST, port=WEBAPP_PORT)
+
+
+# работа через пулинг
+# if __name__ == '__main__':
+    # executor.start_polling(dp, skip_updates=True, timeout=60)
+
