@@ -63,12 +63,12 @@ async def send_def_message(message: types.Message):
 
 # повторная отправка текущего статуса и сброс списка защитников
 # с изменением глобальной переменной с ID последнего сообщения
-@dp.message_handler()
-async def send_def_message_and_reset(message: types.Message):
-    result = await send_def(message.chat.id, get_def_msg(), keyboard)
-    global lm_id, def_list
-    def_list = []
-    lm_id = result.message_id
+# @dp.message_handler()
+# async def send_def_message_and_reset(message: types.Message):
+#     result = await send_def(message.chat.id, get_def_msg(), keyboard)
+#     global lm_id, def_list
+#     def_list = []
+#     lm_id = result.message_id
 
 
 # обновление списка защитников
@@ -115,7 +115,7 @@ async def reset_def_list():
 
 
 # запускаем отправку сообщения по расписанию
-time_do_it = [(22, 10), (6, 10), (14, 10), (19, 48)]
+time_do_it = [(22, 10), (6, 10), (14, 10), (20, 00)]
 scheduler = AsyncIOScheduler()
 for h, m in time_do_it:
     scheduler.add_job(reset_def_list, 'cron', hour=h, minute=m)
