@@ -1,21 +1,20 @@
-from config import TOKEN, PROXY, TEXT, CHAT_ID
-
-from aiogram import Bot, Dispatcher, executor, types
-import asyncio
+import os
 import logging
+import asyncio
+from aiogram import Bot, Dispatcher, types
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from aiogram.utils.executor import start_webhook
+from config import TOKEN, TEXT, CHAT_ID
 
-# webhook settings
-WEBHOOK_HOST = 'https://artik3386.pythonanywhere.com'
-WEBHOOK_PATH = f'/{TOKEN}/'
+# TOKEN = os.environ['TOKEN']
+
+
+WEBHOOK_HOST = 'https://farm-hub-bot.herokuapp.com'  # name your app
+WEBHOOK_PATH = '/webhook/'
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
-# webserver settings
-WEBAPP_HOST = 'localhost'  # or ip
-WEBAPP_PORT = 3001
-
-
+WEBAPP_HOST = '0.0.0.0'
+WEBAPP_PORT = os.environ.get('PORT')
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -123,23 +122,16 @@ for h, m in time_do_it:
 scheduler.start()
 
 
-# включение работы через вебхук
 async def on_startup(dp):
     await bot.set_webhook(WEBHOOK_URL)
-    # insert code here to run it after start
 
 
 async def on_shutdown(dp):
     # insert code here to run it before shutdown
-    await bot.delete_webhook()
+    pass
 
 
 if __name__ == '__main__':
-    start_webhook(dispatcher=dp, webhook_path=WEBHOOK_PATH, on_startup=on_startup, on_shutdown=on_shutdown,
-                  skip_updates=True, host=WEBAPP_HOST, port=WEBAPP_PORT)
-
-
-# работа через пулинг
-# if __name__ == '__main__':
-    # executor.start_polling(dp, skip_updates=True, timeout=60)
-
+    start_webhook(dispatcher=dp, webhook_path=WEBHOOK_PATH,
+                  on_startup=on_startup, on_shutdown=on_shutdown,
+                  host=WEBAPP_HOST, port=WEBAPP_PORT)

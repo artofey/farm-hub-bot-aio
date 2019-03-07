@@ -1,7 +1,7 @@
 
 
 TOKEN = '670584674:AAGwQcfKQbz27p8GtwcXIBUXBru7YCv2JcM'
-PROXY = 'http://31.133.57.134:41258'
+PROXY = 'http://195.80.140.212:8081'
 CHAT_ID = '-1001177643095'
 
 TEXT = {'HELP': ['Зачем тут этот бот и что он умеет?',
