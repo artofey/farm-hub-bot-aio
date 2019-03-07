@@ -24,7 +24,6 @@ dp = Dispatcher(bot)
 
 def_list = []
 lm_id = 0
-lch_id = CHAT_ID
 
 
 def get_def_msg():
@@ -49,26 +48,15 @@ async def send_help(message: types.Message):
 
 
 async def send_def(chat_id, msg_text, kb):
-    return await bot.send_message(chat_id=chat_id, text=msg_text, reply_markup=kb)
+    result = await bot.send_message(chat_id=chat_id, text=msg_text, reply_markup=kb)
+    global lm_id
+    lm_id = result.message_id
 
 
 # повторная отправка текущего статуса по команде с изменением глобальной переменной с ID последнего сообщения
 @dp.message_handler(commands=['bot'])
 async def send_def_message(message: types.Message):
-    result = await send_def(message.chat.id, get_def_msg(), keyboard)
-    global lm_id, lch_id
-    lm_id = result.message_id
-    lch_id = result.chat.id
-
-
-# повторная отправка текущего статуса и сброс списка защитников
-# с изменением глобальной переменной с ID последнего сообщения
-# @dp.message_handler()
-# async def send_def_message_and_reset(message: types.Message):
-#     result = await send_def(message.chat.id, get_def_msg(), keyboard)
-#     global lm_id, def_list
-#     def_list = []
-#     lm_id = result.message_id
+    await send_def(message.chat.id, get_def_msg(), keyboard)
 
 
 # обновление списка защитников
@@ -109,9 +97,9 @@ async def inline_def(inline_query: types.InlineQuery):
 
 # сброс списка защитников и отправка сообщения
 async def reset_def_list():
-    global def_list, lch_id
+    global def_list
     def_list = []
-    await send_def(lch_id, get_def_msg(), keyboard)
+    await send_def(CHAT_ID, get_def_msg(), keyboard)
 
 
 # запускаем отправку сообщения по расписанию
