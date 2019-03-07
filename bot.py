@@ -101,7 +101,7 @@ async def reset_def_list():
 
 
 # запускаем отправку сообщения по расписанию
-time_do_it = [(22, 10), (6, 10), (14, 10), (20, 4)]
+time_do_it = [(22, 10), (6, 10), (14, 10)]
 scheduler = AsyncIOScheduler()
 for h, m in time_do_it:
     scheduler.add_job(reset_def_list, 'cron', hour=h, minute=m)
