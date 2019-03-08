@@ -54,7 +54,7 @@ async def send_def(chat_id, msg_text, kb):
 # повторная отправка текущего статуса по команде с изменением глобальной переменной с ID последнего сообщения
 @dp.message_handler(commands=['bot'])
 async def send_def_message(message: types.Message):
-    await send_def(message.chat.id, get_def_msg(), keyboard)
+    await send_def(CHAT_ID, get_def_msg(), keyboard)
 
 
 # обновление списка защитников
