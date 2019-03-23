@@ -1,11 +1,5 @@
-# artofey_bot
-# TOKEN = '670584674:AAGwQcfKQbz27p8GtwcXIBUXBru7YCv2JcM'
-# farm-hub-bot
-TOKEN = '672597449:AAFvpOVy5WVn2XvihhCoUDUzqzXpi_xUJw0'
-# PROXY = 'http://195.80.140.212:8081'
 CHAT_ID = '-1001177643095'
 # CHAT_ID = '-253315759'
-
 
 TEXT = {'HELP': ['Зачем тут этот бот и что он умеет?',
                  'Основная задача это помощь в защите нашей гилидии от нападений.',
