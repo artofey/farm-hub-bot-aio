@@ -5,6 +5,7 @@ from aiogram import Bot, Dispatcher, types
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from aiogram.utils.executor import start_webhook
 from config import *
+from resources import missing_to_withdraw
 
 
 WEBHOOK_HOST = os.environ.get('WEBHOOK_HOST')
@@ -56,6 +57,12 @@ async def send_def(chat_id, msg_text, kb):
 @dp.message_handler(commands=['bot'])
 async def send_def_message(message: types.Message):
     await send_def(CHAT_ID, get_def_msg(), keyboard)
+
+
+# обработка команд со списком недостающих ресурсов
+@dp.message_handler(lambda message: message.text and message.text.startswith('Not enough materials. Missing:'))
+async def send_withdraw(message: types.Message):
+    await message.reply(missing_to_withdraw(message.text))
 
 
 # обновление списка защитников
