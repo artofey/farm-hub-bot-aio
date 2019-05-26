@@ -4,16 +4,17 @@ import asyncio
 from aiogram import Bot, Dispatcher, types
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from aiogram.utils.executor import start_webhook
-from config import TEXT, CHAT_ID
+from config import *
 
 
-WEBHOOK_HOST = 'https://farm-hub-bot.herokuapp.com'  # name your app
+WEBHOOK_HOST = os.environ.get('WEBHOOK_HOST')
 WEBHOOK_PATH = '/webhook/'
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
 WEBAPP_HOST = '0.0.0.0'
 WEBAPP_PORT = os.environ.get('PORT')
-TOKEN = os.environ['TOKEN']
+TOKEN = os.environ.get('TOKEN')
+CHAT_ID = os.environ.get('CHAT_ID')
 logging.basicConfig(level=logging.DEBUG)
 
 loop = asyncio.get_event_loop()
