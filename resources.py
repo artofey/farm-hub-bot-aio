@@ -1,6 +1,7 @@
 sample = """Not enough materials. Missing:
  6 x Bone
- 64 x Pelt"""
+ 64 x Pelt
+ 2 x Iron ore"""
 
 resources_dict = {
     1: 'Thread',
@@ -10,36 +11,36 @@ resources_dict = {
     5: 'Coal',
     6: 'Charcoal',
     7: 'Powder',
-    8: 'Iron Ore',
+    8: 'Iron ore',
     9: 'Cloth',
-    10: 'Silver Ore',
+    10: 'Silver ore',
     11: 'Bauxite',
     12: 'Cord',
-    13: 'Magic Stone',
-    14: 'Wooden Shaft',
+    13: 'Magic stone',
+    14: 'Wooden shaft',
     15: 'Sapphire',
     16: 'Solvent',
     17: 'Ruby',
     18: 'Hardener',
     19: 'Steel',
     20: 'Leather',
-    21: 'Bone Powder',
+    21: 'Bone powder',
     22: 'String',
     23: 'Coke',
-    24: 'Purified Powder',
-    25: 'Silver Alloy',
-    27: 'Steel Mold',
-    28: 'Silver Mold',
-    29: 'Blacksmith Frame',
-    30: 'Artisan Frame',
+    24: 'Purified powder',
+    25: 'Silver alloy',
+    27: 'Steel mold',
+    28: 'Silver mold',
+    29: 'Blacksmith frame',
+    30: 'Artisan frame',
     31: 'Rope',
-    32: 'Silver Frame',
-    33: 'Metal Plate',
-    34: 'Metallic Fiber',
-    35: 'Crafted Leather',
-    36: 'Quality Cloth',
-    37: 'Blacksmith Mold',
-    38: 'Artisan Mold'
+    32: 'Silver frame',
+    33: 'Metal plate',
+    34: 'Metallic fiber',
+    35: 'Crafted leather',
+    36: 'Quality cloth',
+    37: 'Blacksmith mold',
+    38: 'Artisan mold'
 }
 
 resource_name_to_id = {}
