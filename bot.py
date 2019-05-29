@@ -100,7 +100,7 @@ async def inline_def(inline_query: types.InlineQuery):
         types.InlineQueryResultArticle(id='1', title='🛡 HUB', input_message_content="/g_def HUB"),
         types.InlineQueryResultArticle(id='1', title='🛡 Reckless Duster', input_message_content="/tu_def")]
     try:
-        await bot.answer_inline_query(inline_query.id, results=[item1], cache_time=1)
+        await bot.answer_inline_query(inline_query.id, results=items, cache_time=1)
     except Exception as e:
         print(e)
 
