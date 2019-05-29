@@ -29,7 +29,3 @@ def del_defer_from_db(defer_name):
 
 
 print(get_defers_list_from_db())
-
-# postgres://sksvsjksgyhhom:0de8fbc01a1529c69f554a23bdda59987fc458410dceaae21bebca7ee215fd90@ec2-46-137-113-157.eu-west-1.compute.amazonaws.com:5432/d2crvi4o5rp0ft
-
-# postgres://test:test@localhost:5432/yarovenkoay
