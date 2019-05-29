@@ -96,12 +96,13 @@ async def process_all_callback(callback_query: types.CallbackQuery):
 
 @dp.inline_handler(lambda query: query.query == 'd')
 async def inline_def(inline_query: types.InlineQuery):
+    def_target = [("1", "🛡 HUB", types.InputTextMessageContent("/g_def HUB")),
+                ("2", "🛡 Reckless Duster", types.InputTextMessageContent("/tu_def"))]
     items = []
-    items.append(types.InlineQueryResultArticle(id='1', title='🛡 HUB', input_message_content="/g_def HUB"))
-    items.append(types.InlineQueryResultArticle(id='2', title='🛡 Reckless Duster', input_message_content="/tu_def"))
+    for id, title, i_m_c in def_target:
+        items.append(types.InlineQueryResultArticle(id=id, title=title, input_message_content=i_m_c))
     try:
-        for item in items:
-            await bot.answer_inline_query(inline_query.id, results=item, cache_time=1)
+        await bot.answer_inline_query(inline_query.id, results=items, cache_time=1)
     except Exception as e:
         print(e)
 
