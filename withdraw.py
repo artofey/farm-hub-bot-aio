@@ -31,7 +31,7 @@ def withdraw(resources):
             command += f" {resource.id} {resource.quantity}"
         return [command]
     else:
-        return withdraw(resources[:7]) + withdraw(resources[8:])
+        return withdraw(resources[:8]) + withdraw(resources[8:])
 
 
 def missing_to_withdraw(message):
