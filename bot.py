@@ -82,10 +82,10 @@ def update_def_list(user_name: str):
     global def_list
     if user_name in def_list:
         def_list.remove(user_name)
-        add_defer_to_db(user_name)
+        del_defer_from_db(user_name)
     else:
         def_list.append(user_name)
-        del_defer_from_db(user_name)
+        add_defer_to_db(user_name)
 
 
 # если запрос от последнего сообщения с data = 'go'
