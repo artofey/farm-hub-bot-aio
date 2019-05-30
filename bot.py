@@ -4,8 +4,9 @@ import asyncio
 from aiogram import Bot, Dispatcher, types
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from aiogram.utils.executor import start_webhook
-from config import *
 from withdraw import missing_to_withdraw
+from config import *
+from db import *
 
 
 WEBHOOK_HOST = os.environ.get('WEBHOOK_HOST')
@@ -23,18 +24,23 @@ bot = Bot(token=TOKEN, loop=loop, parse_mode=types.ParseMode.HTML)
 dp = Dispatcher(bot)
 
 def_list = []
+def_list = get_defers_list_from_db()
 lm_id = 0
 
 
 def get_def_msg():
     global def_list
-    return '{}({})\n<b>{}</b>'.format(TEXT['ANS'], str(len(def_list)), ', '.join(def_list))
+    return '{}({})\n<b>{}</b>'.format(TEXT['ANS'],
+                                      str(len(def_list)),
+                                      ', '.join(def_list))
 
 
 keyboard = types.InlineKeyboardMarkup()
 keyboard.row_width = 2
-keyboard.add(types.InlineKeyboardButton(text=TEXT['BTN_SWITCH'], callback_data='go'),
-             types.InlineKeyboardButton(text=TEXT['BTN_DEF'], switch_inline_query='d'))
+keyboard.add(types.InlineKeyboardButton(text=TEXT['BTN_SWITCH'],
+                                        callback_data='go'),
+             types.InlineKeyboardButton(text=TEXT['BTN_DEF'],
+                                        switch_inline_query='d'))
 
 
 @dp.message_handler(commands=['start'])
@@ -48,12 +54,15 @@ async def send_help(message: types.Message):
 
 
 async def send_def(chat_id, msg_text, kb):
-    result = await bot.send_message(chat_id=chat_id, text=msg_text, reply_markup=kb)
+    result = await bot.send_message(chat_id=chat_id,
+                                    text=msg_text,
+                                    reply_markup=kb)
     global lm_id
     lm_id = result.message_id
 
 
-# повторная отправка текущего статуса по команде с изменением глобальной переменной с ID последнего сообщения
+# повторная отправка текущего статуса по команде с изменением
+# глобальной переменной с ID последнего сообщения
 @dp.message_handler(commands=['bot'])
 async def send_def_message(message: types.Message):
     await send_def(CHAT_ID, get_def_msg(), keyboard)
@@ -73,8 +82,10 @@ def update_def_list(user_name: str):
     global def_list
     if user_name in def_list:
         def_list.remove(user_name)
+        add_defer_to_db(user_name)
     else:
         def_list.append(user_name)
+        del_defer_from_db(user_name)
 
 
 # если запрос от последнего сообщения с data = 'go'
@@ -100,9 +111,13 @@ async def inline_def(inline_query: types.InlineQuery):
                 ("2", "🛡 Reckless Duster", types.InputTextMessageContent("/tu_def"))]
     items = []
     for id, title, i_m_c in def_target:
-        items.append(types.InlineQueryResultArticle(id=id, title=title, input_message_content=i_m_c))
+        items.append(types.InlineQueryResultArticle(id=id,
+                                                    title=title,
+                                                    input_message_content=i_m_c))
     try:
-        await bot.answer_inline_query(inline_query.id, results=items, cache_time=1)
+        await bot.answer_inline_query(inline_query.id,
+                                      results=items,
+                                      cache_time=1)
     except Exception as e:
         print(e)
 
@@ -111,6 +126,7 @@ async def inline_def(inline_query: types.InlineQuery):
 async def reset_def_list():
     global def_list
     def_list = []
+    del_all_defers_from_db()
     await send_def(CHAT_ID, get_def_msg(), keyboard)
 
 
