@@ -24,7 +24,11 @@ bot = Bot(token=TOKEN, loop=loop, parse_mode=types.ParseMode.HTML)
 dp = Dispatcher(bot)
 
 def_list = []
-def_list = db.get_defers_list_from_db()
+try:
+    def_list = db.get_defers_list_from_db()
+except Exception as err:
+    print('Error: ', err)
+    db.create_table_defers_list()
 lm_id = 0
 
 

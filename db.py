@@ -3,7 +3,6 @@ import psycopg2
 from psycopg2.extras import DictCursor
 from contextlib import closing
 
-# DATABASE_URL = 'postgres://test:test@localhost:5432/yarovenkoay'
 DATABASE_URL = os.environ.get('DATABASE_URL')
 
 
