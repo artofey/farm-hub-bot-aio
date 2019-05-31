@@ -6,7 +6,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from aiogram.utils.executor import start_webhook
 from withdraw import missing_to_withdraw
 from config import *
-from db import *
+import db
 
 
 WEBHOOK_HOST = os.environ.get('WEBHOOK_HOST')
@@ -24,7 +24,7 @@ bot = Bot(token=TOKEN, loop=loop, parse_mode=types.ParseMode.HTML)
 dp = Dispatcher(bot)
 
 def_list = []
-def_list = get_defers_list_from_db()
+def_list = db.get_defers_list_from_db()
 lm_id = 0
 
 
@@ -82,10 +82,10 @@ def update_def_list(user_name: str):
     global def_list
     if user_name in def_list:
         def_list.remove(user_name)
-        del_defer_from_db(user_name)
+        db.del_defer_from_db(user_name)
     else:
         def_list.append(user_name)
-        add_defer_to_db(user_name)
+        db.add_defer_to_db(user_name)
 
 
 # если запрос от последнего сообщения с data = 'go'
@@ -126,7 +126,7 @@ async def inline_def(inline_query: types.InlineQuery):
 async def reset_def_list():
     global def_list
     def_list = []
-    del_all_defers_from_db()
+    db.del_all_defers_from_db()
     await send_def(CHAT_ID, get_def_msg(), keyboard)
 
 

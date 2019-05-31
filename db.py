@@ -36,7 +36,7 @@ def del_defer_from_db(defer_name):
     sql_request_to_db('DELETE FROM defers_list * WHERE name=%s', defer_name)
 
 
-def del_all_defer_from_db():
+def del_all_defers_from_db():
     sql_request_to_db('DELETE FROM defers_list *')
 
 
