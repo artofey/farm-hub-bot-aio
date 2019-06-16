@@ -107,8 +107,7 @@ async def process_all_callback(callback_query: types.CallbackQuery):
 
 @dp.inline_handler(lambda query: query.query == 'd')
 async def inline_def(inline_query: types.InlineQuery):
-    def_target = [("1", "🛡 HUB", types.InputTextMessageContent("/g_def HUB")),
-                ("2", "🛡 Reckless Duster", types.InputTextMessageContent("/tu_def"))]
+    def_target = [("1", "🛡 HUB", types.InputTextMessageContent("/g_def HUB"))]
     items = []
     for id, title, i_m_c in def_target:
         items.append(types.InlineQueryResultArticle(id=id,
