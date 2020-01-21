@@ -73,7 +73,7 @@ async def send_def_message(message: types.Message):
 
 @dp.message_handler(lambda message: message.text
                     and message.text.startswith('Здесь ты можешь купить и продать разные ресурсы.')
-                    and message.chat.id == CHAT_ID)
+                    )  # and message.chat.id == CHAT_ID)
 async def send_all_message(msg: types.Message):
     print(msg.chat.id)
     print(msg.forward_from_chat.id)
