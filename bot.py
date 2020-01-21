@@ -76,7 +76,7 @@ async def send_def_message(message: types.Message):
                     )  # and message.chat.id == CHAT_ID)
 async def send_all_message(msg: types.Message):
     print(msg.chat.id)
-    print(msg.forward_from_chat.id)
+    print(msg.forward_from.id)
     print(msg.text)
     await msg.reply('Спасибо. Биржа сохранена.')
 
