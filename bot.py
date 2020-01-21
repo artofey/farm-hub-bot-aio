@@ -17,6 +17,8 @@ WEBAPP_HOST = '0.0.0.0'
 WEBAPP_PORT = os.environ.get('PORT')
 TOKEN = os.environ.get('TOKEN')
 CHAT_ID = os.environ.get('CHAT_ID')
+CHAT_WARS_BOT_ID = 265204902
+
 # logging.basicConfig(level=logging.DEBUG)
 logging.basicConfig(level=logging.INFO)
 
@@ -69,12 +71,13 @@ async def send_def_message(message: types.Message):
     await send_def(CHAT_ID, get_def_msg(), keyboard)
 
 
-@dp.message_handler(lambda message: message.text and (
-        message.text.startswith('Здесь ты можешь купить и продать разные ресурсы.')))
+@dp.message_handler(lambda message: message.text
+                    and message.text.startswith('Здесь ты можешь купить и продать разные ресурсы.')
+                    and message.chat.id == CHAT_ID)
 async def send_all_message(msg: types.Message):
-    print(msg)
+    print(msg.chat.id)
+    print(msg.forward_from_chat.id)
     print(msg.text)
-    print(msg.as_json())
     await msg.reply('Спасибо. Биржа сохранена.')
 
 
