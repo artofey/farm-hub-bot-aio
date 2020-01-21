@@ -69,9 +69,13 @@ async def send_def_message(message: types.Message):
     await send_def(CHAT_ID, get_def_msg(), keyboard)
 
 
-@dp.message_handler(lambda message: message)
+@dp.message_handler(lambda message: message.text and (
+        message.text.startswith('Здесь ты можешь купить и продать разные ресурсы.')))
 async def send_all_message(msg: types.Message):
-    await msg.reply(msg.as_json())
+    print(msg)
+    print(msg.text)
+    print(msg.as_json())
+    await msg.reply('Спасибо. Биржа сохранена.')
 
 
 # обработка команд со списком недостающих ресурсов
