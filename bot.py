@@ -69,6 +69,11 @@ async def send_def_message(message: types.Message):
     await send_def(CHAT_ID, get_def_msg(), keyboard)
 
 
+@dp.message_handler(lambda message: message)
+async def send_all_message(msg: types.Message):
+    await msg.reply(msg.as_json())
+
+
 # обработка команд со списком недостающих ресурсов
 # @dp.message_handler(lambda message: message.text and (
 #         message.text.startswith('Not enough materials. Missing:') or
