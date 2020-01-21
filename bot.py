@@ -17,7 +17,8 @@ WEBAPP_HOST = '0.0.0.0'
 WEBAPP_PORT = os.environ.get('PORT')
 TOKEN = os.environ.get('TOKEN')
 CHAT_ID = os.environ.get('CHAT_ID')
-logging.basicConfig(level=logging.DEBUG)
+# logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 loop = asyncio.get_event_loop()
 bot = Bot(token=TOKEN, loop=loop, parse_mode=types.ParseMode.HTML)
