@@ -1,10 +1,13 @@
 import os
 import logging
 import asyncio
+
 from aiogram import Bot, Dispatcher, types
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from aiogram.utils.executor import start_webhook
+
 # from withdraw import missing_to_withdraw
+from market import get_data_from_message
 from config import *
 import db
 
@@ -76,10 +79,15 @@ async def send_def_message(message: types.Message):
                     and message.text.startswith('Здесь ты можешь купить и продать разные ресурсы.')
                     and message.chat.id == int(CHAT_ID)
                     and message.forward_from.id == CHAT_WARS_BOT_ID)
-async def send_all_message(msg: types.Message):
+async def send_replay_for_market_message(msg: types.Message):
     print(msg.chat.id, type(msg.chat.id))
     print(msg.forward_from.id, type(msg.forward_from.id))
-    await msg.reply('Спасибо. Биржа сохранена.')
+    try:
+        market_data = get_data_from_message(msg)
+    except Exception as err:
+        await msg.reply(f'Ошибка при парсинге сообщения от биржи: \n {err}')
+    else:
+        await msg.reply(f'Спасибо. Биржа сохранена. \n {market_data}')
 
 
 # обработка команд со списком недостающих ресурсов
