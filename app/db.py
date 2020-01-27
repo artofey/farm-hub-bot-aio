@@ -1,13 +1,12 @@
-import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from db import DATABASE_URL
 
 
 # DB_CONNECT = 'postgresql://postgres:1@localhost/farm_bot'
-DB_CONNECT = os.environ.get('DATABASE_URL')
 
-engine = create_engine(DB_CONNECT, echo=True)
+engine = create_engine(DATABASE_URL, echo=True)
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 

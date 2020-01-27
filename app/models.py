@@ -44,9 +44,6 @@ class Market(Base):
         return f'Market res {self.resource.name} of user {self.user.name}'
 
 
-Base.metadata.create_all(bind=engine)
-
-
 def add_test_data():
     Base.metadata.create_all(bind=engine)
     session = Session()

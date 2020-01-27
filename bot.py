@@ -76,7 +76,12 @@ async def send_def_message(message: types.Message):
 
 @dp.message_handler(commands=['all_markets'])
 async def send_all_markets(message: types.Message):
-    await message.reply(get_all_markets())
+    try:
+        markets_msg = get_all_markets()
+    except Exception as err:
+        await message.reply(f'Ошибка: \n {err}')
+    else:
+        await message.reply(markets_msg)
 
 
 # обработка сообщения от биржи в игре
