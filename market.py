@@ -12,7 +12,11 @@ def get_all_markets():
     markets = {mrkt.user.user_name: [] for mrkt in all_markets}
     strings_markets = []
     for market in all_markets:
-        markets[market.user.user_name].append(f'{market.resource.name} - {market.count}')
+        try:
+            res_name = market.resource.name
+        except AttributeError:
+            res_name = 'ErrorName'
+        markets[market.user.user_name].append(f'{res_name} - {market.count}')
 
     for key, value in markets.items():
         strings_markets.append(f'@{key}')
