@@ -7,7 +7,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from aiogram.utils.executor import start_webhook
 
 # from withdraw import missing_to_withdraw
-from market import get_data_from_message
+from market import get_data_from_message, save_market_to_db
 from config import *
 import db
 
@@ -87,7 +87,12 @@ async def send_replay_for_market_message(msg: types.Message):
     except Exception as err:
         await msg.reply(f'Ошибка при парсинге сообщения от биржи: \n {err}')
     else:
-        await msg.reply(f'Спасибо. Биржа сохранена. \n {market_data}')
+        try:
+            save_market_to_db(market_data)
+        except Exception as err:
+            await msg.reply(f'Ошибка при сохранении данных этой биржи: \n {err}')
+        else:
+            await msg.reply(f'Спасибо. Биржа сохранена. \n {market_data}')
 
 
 # обработка команд со списком недостающих ресурсов
