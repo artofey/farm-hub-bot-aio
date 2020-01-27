@@ -78,6 +78,7 @@ async def send_def_message(message: types.Message):
 async def send_all_markets(message: types.Message):
     await message.reply(get_all_markets())
 
+
 # обработка сообщения от биржи в игре
 @dp.message_handler(lambda message: message.text
                     and message.text.startswith('Здесь ты можешь купить и продать разные ресурсы.')
