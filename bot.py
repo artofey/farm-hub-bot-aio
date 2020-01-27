@@ -7,7 +7,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from aiogram.utils.executor import start_webhook
 
 # from withdraw import missing_to_withdraw
-from market import get_data_from_message, save_market_to_db
+from market import get_data_from_message, save_market_to_db, get_all_markets
 from config import *
 import db
 
@@ -73,6 +73,10 @@ async def send_def(chat_id, msg_text, kb):
 async def send_def_message(message: types.Message):
     await send_def(CHAT_ID, get_def_msg(), keyboard)
 
+
+@dp.message_handler(commands=['all_markets'])
+async def send_all_markets(message: types.Message):
+    await message.reply(get_all_markets())
 
 # обработка сообщения от биржи в игре
 @dp.message_handler(lambda message: message.text

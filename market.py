@@ -6,6 +6,23 @@ from app.models import User, Market, Resource
 from app.db import get_or_create, Session, Base, engine
 
 
+def get_all_markets():
+    session = Session()
+    all_markets = session.query(Market).all()
+    markets = {mrkt.user.user_name: [] for mrkt in all_markets}
+    strings_markets = []
+    for market in all_markets:
+        markets[market.user.user_name].append(f'{market.resource.name} - {market.count}')
+
+    for key, value in markets.items():
+        strings_markets.append(f'@{key}')
+        for line in value:
+            strings_markets.append(line)
+        strings_markets.append('\n')
+
+    return '\n'.join(strings_markets)
+
+
 def save_market_to_db(msg_data: dict):
     """
     - Получить запись текущего юзера (запрос в базу по имени и взять одну запись,
@@ -107,4 +124,5 @@ if __name__ == '__main__':
     }
     new_data['market'] = get_resource_from_market_text(str(data['text']))
 
-    save_market_to_db(new_data)
+    # save_market_to_db(new_data)
+    print(get_all_markets())
