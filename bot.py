@@ -4,7 +4,7 @@ import asyncio
 from aiogram import Bot, Dispatcher, types
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from aiogram.utils.executor import start_webhook
-from withdraw import missing_to_withdraw
+# from withdraw import missing_to_withdraw
 from config import *
 import db
 
@@ -69,12 +69,12 @@ async def send_def_message(message: types.Message):
 
 
 # обработка команд со списком недостающих ресурсов
-@dp.message_handler(lambda message: message.text and (
-        message.text.startswith('Not enough materials. Missing:') or
-        message.text.startswith('Не хватает материалов для крафта')))
-async def send_withdraw(message: types.Message):
-    for command in (missing_to_withdraw(message.text)):
-        await message.reply(command)
+# @dp.message_handler(lambda message: message.text and (
+#         message.text.startswith('Not enough materials. Missing:') or
+#         message.text.startswith('Не хватает материалов для крафта')))
+# async def send_withdraw(message: types.Message):
+#     for command in (missing_to_withdraw(message.text)):
+#         await message.reply(command)
 
 
 # обновление списка защитников
