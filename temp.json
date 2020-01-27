@@ -1,0 +1,136 @@
+{
+  "message_id": 51,
+  "from": {
+    "id": 288783243,
+    "is_bot": false,
+    "first_name": "🅐🅡🅣🅔🅜🐾",
+    "username": "artofey",
+    "language_code": "ru"
+  },
+  "chat": {
+    "id": -1001245540882,
+    "title": "Test bot",
+    "type": "supergroup"
+  },
+  "date": 1579637754,
+  "forward_from": {
+    "id": 265204902,
+    "is_bot": true,
+    "first_name": "Chat Wars 3",
+    "username": "ChatWarsBot"
+  },
+  "forward_date": 1579637219,
+  "text": "Здесь ты можешь купить и продать разные ресурсы.\nЧтобы найти товар напиши:\n/t [имя ресурса]\nПример:\n/t coal\n\nТвои предложения (9/12):\nPelt\n1000 x 1000💰 [Продаётся] /rm_bo76jq5og3cc86l1a5ng\nCorn\n5 x 1000💰 [Продаётся] /rm_bo9m4ttog3ccfsbhvv70\nRuby\n401 x 1000💰 [Продаётся] /rm_bojj3m5og3cei2bh40kg\nPelt\n1000 x 1000💰 [Продаётся] /rm_bojl945og3cei2bh6oj0\nPowder\n1000 x 1000💰 [Продаётся] /rm_bojl9alog3cei2bh6pf0\nPowder\n1000 x 1000💰 [Продаётся] /rm_bojl9dlog3cei2bh6pu0\nCrafted leather\n500 x 1000💰 [Продаётся] /rm_bojl9k5og3cei2bh6qkg\nBone\n957 x 1000💰 [Продаётся] /rm_bojl9plog3cei2bh6r9g\nRope\n1000 x 1000💰 [Продаётся] /rm_bojl9vtog3cei2bh6s60\n\nТвои последние 10 сделок: /trades",
+  "entities": [
+    {
+      "offset": 75,
+      "length": 2,
+      "type": "bot_command"
+    },
+    {
+      "offset": 100,
+      "length": 2,
+      "type": "bot_command"
+    },
+    {
+      "offset": 109,
+      "length": 16,
+      "type": "bold"
+    },
+    {
+      "offset": 134,
+      "length": 4,
+      "type": "bold"
+    },
+    {
+      "offset": 165,
+      "length": 24,
+      "type": "bot_command"
+    },
+    {
+      "offset": 190,
+      "length": 4,
+      "type": "bold"
+    },
+    {
+      "offset": 218,
+      "length": 24,
+      "type": "bot_command"
+    },
+    {
+      "offset": 243,
+      "length": 4,
+      "type": "bold"
+    },
+    {
+      "offset": 273,
+      "length": 24,
+      "type": "bot_command"
+    },
+    {
+      "offset": 298,
+      "length": 4,
+      "type": "bold"
+    },
+    {
+      "offset": 329,
+      "length": 24,
+      "type": "bot_command"
+    },
+    {
+      "offset": 354,
+      "length": 6,
+      "type": "bold"
+    },
+    {
+      "offset": 387,
+      "length": 24,
+      "type": "bot_command"
+    },
+    {
+      "offset": 412,
+      "length": 6,
+      "type": "bold"
+    },
+    {
+      "offset": 445,
+      "length": 24,
+      "type": "bot_command"
+    },
+    {
+      "offset": 470,
+      "length": 15,
+      "type": "bold"
+    },
+    {
+      "offset": 511,
+      "length": 24,
+      "type": "bot_command"
+    },
+    {
+      "offset": 536,
+      "length": 4,
+      "type": "bold"
+    },
+    {
+      "offset": 566,
+      "length": 24,
+      "type": "bot_command"
+    },
+    {
+      "offset": 591,
+      "length": 4,
+      "type": "bold"
+    },
+    {
+      "offset": 622,
+      "length": 24,
+      "type": "bot_command"
+    },
+    {
+      "offset": 674,
+      "length": 7,
+      "type": "bot_command"
+    }
+  ]
+}
