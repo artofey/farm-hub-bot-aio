@@ -20,7 +20,7 @@ def get_all_markets():
             strings_markets.append(line)
         strings_markets.append('\n')
 
-    return '\n'.join(strings_markets)
+    return '\n'.join(strings_markets) or 'None'
 
 
 def save_market_to_db(msg_data: dict):
