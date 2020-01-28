@@ -59,6 +59,11 @@ async def send_help(message: types.Message):
     await message.reply(' '.join(TEXT['HELP']))
 
 
+@dp.message_handler(commands=['all_markets'])
+async def send_all_markets(message: types.Message):
+    await message.reply(get_all_markets())
+
+
 async def send_def(chat_id, msg_text, kb):
     result = await bot.send_message(chat_id=chat_id,
                                     text=msg_text,
@@ -72,11 +77,6 @@ async def send_def(chat_id, msg_text, kb):
 @dp.message_handler(commands=['bot'])
 async def send_def_message(message: types.Message):
     await send_def(CHAT_ID, get_def_msg(), keyboard)
-
-
-@dp.message_handler(commands=['all_markets'])
-async def send_all_markets(message: types.Message):
-    await message.reply(get_all_markets())
 
 
 # обработка сообщения от биржи в игре
