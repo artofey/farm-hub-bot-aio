@@ -44,6 +44,7 @@ class Market(Base):
         return f'Market res {self.resource.name} of user {self.user.name}'
 
 
+Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
 
 

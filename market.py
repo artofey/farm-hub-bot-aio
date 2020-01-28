@@ -1,7 +1,6 @@
 import json
 
 from aiogram import types
-from sqlalchemy.orm import subqueryload_all
 
 from app.models import User, Market, Resource
 from app.db import get_or_create, Session, Base, engine
@@ -9,7 +8,7 @@ from app.db import get_or_create, Session, Base, engine
 
 def get_all_markets():
     session = Session()
-    all_markets = session.query(Market).options(subqueryload_all)
+    all_markets = session.query(Market).all()
     markets = {mrkt.user.user_name: [] for mrkt in all_markets}
     strings_markets = []
     for market in all_markets:
