@@ -35,8 +35,7 @@ class Market(Base):
     user_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'))
     user = relationship("User", backref="markets")
     resource_id = Column(Integer, ForeignKey('resources.id'))
-    # жесткая связь 1 к 1. При удалении маркета удаляется и связанный ресурс
-    resource = relationship("Resource", backref=backref("markets", uselist=False))
+    resource = relationship("Resource", backref="markets")
     count = Column(Integer)
     last_update = Column(Integer)
 
