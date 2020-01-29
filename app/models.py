@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import relationship
 
 from app.db import Base, engine, Session
 
@@ -43,7 +43,7 @@ class Market(Base):
         return f'Market res {self.resource.name} of user {self.user.name}'
 
 
-Base.metadata.drop_all(bind=engine)
+# Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
 
 

@@ -97,7 +97,7 @@ async def send_replay_for_market_message(msg: types.Message):
         except Exception as err:
             await msg.reply(f'Ошибка при сохранении данных этой биржи: \n {err}')
         else:
-            await msg.reply(f'Спасибо. Биржа сохранена. \n {market_data}')
+            await msg.reply(f'Спасибо. Биржа сохранена.')
 
 
 # обработка команд со списком недостающих ресурсов
