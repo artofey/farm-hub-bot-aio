@@ -15,7 +15,7 @@ def get_all_markets():
         markets[market.user.user_name].append(f'{market.resource.name} - {market.count}')
 
     for key, value in markets.items():
-        strings_markets.append(f'--> {key}')
+        strings_markets.append(f' > **{key}**')
         for line in value:
             strings_markets.append(line)
 
