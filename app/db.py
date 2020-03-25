@@ -6,7 +6,7 @@ from db import DATABASE_URL
 
 # DB_CONNECT = 'postgresql://postgres:1@localhost/farm_bot'
 
-engine = create_engine(DATABASE_URL, echo=True)
+engine = create_engine(DATABASE_URL)
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 
