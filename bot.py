@@ -1,10 +1,13 @@
 import os
 import logging
 import asyncio
+
 from aiogram import Bot, Dispatcher, types
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from aiogram.utils.executor import start_webhook
+
 # from withdraw import missing_to_withdraw
+from market import get_data_from_message, save_market_to_db, get_all_markets
 from config import *
 import db
 
@@ -16,8 +19,11 @@ WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 WEBAPP_HOST = '0.0.0.0'
 WEBAPP_PORT = os.environ.get('PORT')
 TOKEN = os.environ.get('TOKEN')
-CHAT_ID = os.environ.get('CHAT_ID')
-logging.basicConfig(level=logging.DEBUG)
+CHAT_ID = int(os.environ.get('CHAT_ID'))
+CHAT_WARS_BOT_ID = 265204902
+
+# logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 loop = asyncio.get_event_loop()
 bot = Bot(token=TOKEN, loop=loop, parse_mode=types.ParseMode.HTML)
@@ -53,6 +59,11 @@ async def send_help(message: types.Message):
     await message.reply(' '.join(TEXT['HELP']))
 
 
+@dp.message_handler(commands=['all_markets'])
+async def send_all_markets(message: types.Message):
+    await message.reply(get_all_markets())
+
+
 async def send_def(chat_id, msg_text, kb):
     result = await bot.send_message(chat_id=chat_id,
                                     text=msg_text,
@@ -66,6 +77,27 @@ async def send_def(chat_id, msg_text, kb):
 @dp.message_handler(commands=['bot'])
 async def send_def_message(message: types.Message):
     await send_def(CHAT_ID, get_def_msg(), keyboard)
+
+
+# обработка сообщения от биржи в игре
+@dp.message_handler(lambda message: message.text
+                    and message.text.startswith('Здесь ты можешь купить и продать разные ресурсы.')
+                    and message.chat.id == int(CHAT_ID)
+                    and message.forward_from.id == CHAT_WARS_BOT_ID)
+async def send_replay_for_market_message(msg: types.Message):
+    print(msg.chat.id, type(msg.chat.id))
+    print(msg.forward_from.id, type(msg.forward_from.id))
+    try:
+        market_data = get_data_from_message(msg)
+    except Exception as err:
+        await msg.reply(f'Ошибка при парсинге сообщения от биржи: \n {err}')
+    else:
+        try:
+            save_market_to_db(market_data)
+        except Exception as err:
+            await msg.reply(f'Ошибка при сохранении данных этой биржи: \n {err}')
+        else:
+            await msg.reply(f'Спасибо. Биржа сохранена.')
 
 
 # обработка команд со списком недостающих ресурсов

@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import relationship
 
 from app.db import Base, engine, Session
 
@@ -35,13 +35,16 @@ class Market(Base):
     user_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'))
     user = relationship("User", backref="markets")
     resource_id = Column(Integer, ForeignKey('resources.id'))
-    # жесткая связь 1 к 1. При удалении маркета удаляется и связанный ресурс
-    resource = relationship("Resource", backref=backref("markets", uselist=False))
+    resource = relationship("Resource", backref="markets")
     count = Column(Integer)
     last_update = Column(Integer)
 
     def __repr__(self):
         return f'Market res {self.resource.name} of user {self.user.name}'
+
+
+# Base.metadata.drop_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 
 def add_test_data():
