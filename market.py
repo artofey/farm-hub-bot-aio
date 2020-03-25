@@ -19,7 +19,7 @@ def get_all_markets():
         markets[market.user.user_name].append(f'{res_name} - {market.count}')
 
     for key, value in markets.items():
-        strings_markets.append(f'{key} free slots = {value[0]}')
+        strings_markets.append(f'<b>{key}</b> free slots: {value[0]}')
         value.pop(0)
         for line in value:
             strings_markets.append(line)
