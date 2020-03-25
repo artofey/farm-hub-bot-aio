@@ -6,7 +6,6 @@ from aiogram import Bot, Dispatcher, types
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from aiogram.utils.executor import start_webhook
 
-# from withdraw import missing_to_withdraw
 from market import get_data_from_message, save_market_to_db, get_all_markets
 from config import *
 import db
@@ -22,7 +21,6 @@ TOKEN = os.environ.get('TOKEN')
 CHAT_ID = int(os.environ.get('CHAT_ID'))
 CHAT_WARS_BOT_ID = 265204902
 
-# logging.basicConfig(level=logging.DEBUG)
 logging.basicConfig(level=logging.INFO)
 
 loop = asyncio.get_event_loop()
@@ -35,6 +33,7 @@ lm_id = 0
 
 
 def get_def_msg():
+    """ Формирвание сообщения списка защитников """
     global def_list
     return '{}({})\n<b>{}</b>'.format(TEXT['ANS'],
                                       str(len(def_list)),
@@ -72,21 +71,19 @@ async def send_def(chat_id, msg_text, kb):
     lm_id = result.message_id
 
 
-# повторная отправка текущего статуса по команде с изменением
-# глобальной переменной с ID последнего сообщения
 @dp.message_handler(commands=['bot'])
 async def send_def_message(message: types.Message):
+    """ повторная отправка текущего статуса по команде с изменением
+        глобальной переменной с ID последнего сообщения """
     await send_def(CHAT_ID, get_def_msg(), keyboard)
 
 
-# обработка сообщения от биржи в игре
 @dp.message_handler(lambda message: message.text
                     and message.text.startswith('Здесь ты можешь купить и продать разные ресурсы.')
                     and message.chat.id == int(CHAT_ID)
                     and message.forward_from.id == CHAT_WARS_BOT_ID)
 async def send_replay_for_market_message(msg: types.Message):
-    print(msg.chat.id, type(msg.chat.id))
-    print(msg.forward_from.id, type(msg.forward_from.id))
+    """ обработка сообщения от биржи в игре """
     try:
         market_data = get_data_from_message(msg)
     except Exception as err:
@@ -100,17 +97,8 @@ async def send_replay_for_market_message(msg: types.Message):
             await msg.reply(f'Спасибо. Биржа сохранена.')
 
 
-# обработка команд со списком недостающих ресурсов
-# @dp.message_handler(lambda message: message.text and (
-#         message.text.startswith('Not enough materials. Missing:') or
-#         message.text.startswith('Не хватает материалов для крафта')))
-# async def send_withdraw(message: types.Message):
-#     for command in (missing_to_withdraw(message.text)):
-#         await message.reply(command)
-
-
-# обновление списка защитников
 def update_def_list(user_name: str):
+    """ обновление списка защитников """
     global def_list
     if user_name in def_list:
         def_list.remove(user_name)
@@ -120,9 +108,9 @@ def update_def_list(user_name: str):
         db.add_defer_to_db(user_name)
 
 
-# если запрос от последнего сообщения с data = 'go'
 @dp.callback_query_handler(lambda c: c.message.message_id == lm_id and c.data == 'go')
 async def process_callback_btn_go(callback_query: types.CallbackQuery):
+    """ если запрос от последнего сообщения с data = 'go' """
     update_def_list(callback_query.from_user.username)
     await bot.answer_callback_query(callback_query.id)
     await bot.edit_message_text(text=get_def_msg(),
@@ -131,14 +119,15 @@ async def process_callback_btn_go(callback_query: types.CallbackQuery):
                                 reply_markup=keyboard)
 
 
-# ответ на все нажатия кнопок
 @dp.callback_query_handler(lambda c: c.data != 'go')
 async def process_all_callback(callback_query: types.CallbackQuery):
+    """ ответ на все нажатия кнопок """
     await bot.answer_callback_query(callback_query.id)
 
 
 @dp.inline_handler(lambda query: query.query == 'd')
 async def inline_def(inline_query: types.InlineQuery):
+    """ обработка инлайн меню """
     def_target = [("1", "🛡 HUB", types.InputTextMessageContent("/g_def HUB"))]
     items = []
     for id, title, i_m_c in def_target:
@@ -153,8 +142,8 @@ async def inline_def(inline_query: types.InlineQuery):
         print(e)
 
 
-# сброс списка защитников и отправка сообщения
 async def reset_def_list():
+    """ сброс списка защитников и отправка сообщения """
     global def_list
     def_list = []
     db.del_all_defers_from_db()
