@@ -9,7 +9,7 @@ from app.db import get_or_create, Session, Base, engine
 def get_all_markets():
     session = Session()
     all_markets = session.query(Market).all()
-    markets = {mrkt.user.user_name: [] for mrkt in all_markets}
+    markets = {mrkt.user.user_name: [mrkt.user.free_slots] for mrkt in all_markets}
     strings_markets = []
     for market in all_markets:
         try:
@@ -19,7 +19,8 @@ def get_all_markets():
         markets[market.user.user_name].append(f'{res_name} - {market.count}')
 
     for key, value in markets.items():
-        strings_markets.append(f'{key}')
+        strings_markets.append(f'{key} free slots = {value[0]}')
+        value.pop(0)
         for line in value:
             strings_markets.append(line)
         strings_markets.append('\n')
